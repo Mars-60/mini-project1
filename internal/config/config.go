@@ -4,10 +4,12 @@ import (
 	"flag"
 	"log"
 	"os"
+
+	"github.com/ilyakaznacheev/cleanenv"
 )
 
 type HTTPServer struct {
-	Address string
+	Address string `yaml:"address" env-required:"true"`
 }
 
 // env-default:"production"
@@ -40,7 +42,7 @@ func MustLoad() *Config{
 
 var cfg Config
 
-err:=cleanenv.ReadConfig(configPath, &cfg)
+err:= cleanenv.ReadConfig(configPath, &cfg)
 if err!=nil{
 	log.Fatalf("can not read file config %s",err.Error())
 }
